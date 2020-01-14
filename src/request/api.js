@@ -35,6 +35,16 @@ const api = {
     //添加用户收款账号
     addUserAccount(params){
         return axios.post(`/h5/add_account`, qs.stringify(params));
+    },
+
+    //添加用户收款账号
+    getQuestions(keyword){
+        return axios.get(`/h5/questions/?keyword=${keyword}`);
+    },
+
+    //用户提交反馈数据
+    feedBack(params){
+        return axios.post('/h5/feedback',qs.stringify(params))
     }
 
 }

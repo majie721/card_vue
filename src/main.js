@@ -24,11 +24,13 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$api = api; // 将api挂载到vue的原型上复制代码
 
-Vue.prototype.$rtoast = function(res){
+Vue.prototype.$rtoast = function(res,func){
     if(res.ret===0){
         this.$toast.success(res.msg)
+        func()
     }else{
         this.$toast.fail(res.msg)
+        func()
     }
 }
 

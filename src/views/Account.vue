@@ -60,10 +60,9 @@
     </div>
     <div class="item">
             <van-cell title="收款账号" is-link value="内容" to="bankList"/>
-            <van-cell title="合作代理" is-link value="内容" />
             <van-cell title="提现记录" is-link value="内容" />
             <van-cell title="常见问题" is-link value="内容" to="questions"/>
-            <van-cell title="意见反馈" is-link value="内容" />
+            <van-cell title="意见反馈" is-link value="内容"  to="feedback"/>
     </div>
     <ATabbar></ATabbar>
 </div>

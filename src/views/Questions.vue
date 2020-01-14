@@ -20,9 +20,9 @@
             </van-search>
 
             <van-collapse v-model="activeName">
-                <van-collapse-item title="标题1" name="1">内容</van-collapse-item>
-                <van-collapse-item title="标题2" name="2">内容</van-collapse-item>
-                <van-collapse-item title="标题3" name="3">内容</van-collapse-item>
+                <van-collapse-item v-for="(item,key) in list" :title="item.title" :key="key" :name="key">
+                    <div v-html="item.content"></div>
+                </van-collapse-item>
             </van-collapse>
         </div>
     </div>
@@ -34,16 +34,26 @@
         data:function () {
             return {
                 keyword:'',
-                activeName:['1']
+                activeName:['0'],
+                list:[]
             }
         },
         methods:{
             onSearch:function () {
-
+                this.getQuestions()
             },
             onCancel:function () {
-
+                this.keyword=''
+            },
+            getQuestions:function () {
+                this.$api.getQuestions(this.keyword).then(
+                    res=>{
+                        this.list=res.data.data
+                })
             }
+        },
+        created() {
+            this.getQuestions();
         }
     }
 </script>
