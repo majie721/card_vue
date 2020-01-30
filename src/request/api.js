@@ -45,6 +45,11 @@ const api = {
     //用户提交反馈数据
     feedBack(params){
         return axios.post('/h5/feedback',qs.stringify(params))
+    },
+
+    //用户登录
+    loginData(params){
+        return axios.post('/h5/login',qs.stringify(params))
     }
 
 }

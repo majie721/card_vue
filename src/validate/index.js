@@ -2,6 +2,15 @@ import Vue from 'vue'
 import VeeValidate, {Validator} from 'vee-validate'
 
 
+Validator.extend('username',{
+    messages: {
+        en:field => field + '必须是11位手机号码或者邮箱号码',
+        zh_CN:field =>   '用户名必须是11位手机号码或者邮箱号码',
+    },
+    validate: value => {
+        return (/^1[3456789]\d{9}$/.test(value) || /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(value))
+    },
+})
 
 Vue.use(VeeValidate)
 const formatFileSize = function (size) {

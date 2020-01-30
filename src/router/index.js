@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import Sell from "../views/Sell.vue";
 import Account from "../views/Account.vue";
 import BankList from "../views/BankList.vue";
+import Login from "../views/Login.vue";
 
 
 
@@ -14,6 +15,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Home
+  },
+  {
+    path:'/login',
+    name:'login',
+    component:Login
   },
   {
     path: "/home",

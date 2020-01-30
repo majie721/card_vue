@@ -85,7 +85,9 @@
                             default:this.len>0?this.is_default:true, //如果是添加第一张卡,设置为默认
                         }
                         this.$api.addUserAccount(param).then(res=>{
-                            this.$rtoast(res.data);
+                            this.$rtoast(res.data,function () {
+
+                            });
                             this.$emit('update:editPopupShow',false);
                             this.$emit('updateData'); //更新父组件的数据
                         })

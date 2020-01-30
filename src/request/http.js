@@ -80,7 +80,7 @@ instance.interceptors.request.use(
         // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码
         // 而后我们可以在响应拦截器中，根据状态码进行一些统一的操作。
         const token = localStorage.getItem('token');
-        token && (config.headers.token = token);
+        token && (config.headers.Authorization = 'Bearer '+token);
          return config;
     },
     error => Promise.error(error))
@@ -89,8 +89,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     // 请求成功
     res => {
-        if (res.data && res.data.token && res.status === 200) {
-            localStorage.setItem('token', res.data.token);
+        if (res.data  && res.status === 200) {
             return Promise.resolve(res)
         } else {
             return Promise.reject(res)
