@@ -59,10 +59,13 @@
                     <van-cell-group>
                         <van-field
                                 v-model="card_str"
-                                rows="3"
+                                rows="4"
                                 autosize
                                 type="textarea"
-                                placeholder="每张卡密为一行,卡号与密码之间用空格隔开"
+                                placeholder="每张卡号卡密为一行,卡号与密码之间用空格隔开
+列如一张卡的卡号为abdefg 卡密123456
+填写格式如下:
+abcdefg 123456"
                         />
                         <div class="batch-div">
                             <van-button @click="dealContent" type="primary" size="mini" round class="deal-btn">整理卡密</van-button>
@@ -74,7 +77,7 @@
                 <div class="batch-div urgent">
                     <van-checkbox v-model="urgent">
                         加急处理
-                        <span class="urgent-fee">手续费3%</span>
+                        <span class="urgent-fee">手续费{{urgentVal}}%</span>
                     </van-checkbox>
 
                 </div>
@@ -89,7 +92,7 @@
         </div>
 
         <div class=" submit-btn">
-            <van-button  size="large" type="info" round>提交卡号卡密</van-button>
+            <van-button  size="large" type="info" :disabled="disabled" @click="submitHandle" round>{{btnText}}</van-button>
         </div>
 
 
@@ -131,11 +134,24 @@
                 </div>
             </van-index-bar>
         </van-popup>
+
+        <Agreement :agreementShow.sync="agreementOn" :afterAgreement="afterAgreement"></Agreement>
+        <!--自定义面值输入dialog start-->
+        <van-dialog v-model="customFaceShow"
+                    title="自定义面值"
+                    show-cancel-button
+                    :before-close="beforeCustomFace"
+        >
+            <van-field v-model="customFaceValue" :error-message="customFaceMsg" type="number"  placeholder="请填写您要提交的面值" />
+        </van-dialog>
+        <!--自定义面值输入dialog end-->
     </div>
 </template>
 
 <script>
     import {  Grid, GridItem,ActionSheet,Cell, CellGroup,Popup ,IndexBar, IndexAnchor,Tab, Tabs} from 'vant';
+    import Agreement from '../components/Agreement'
+
     export default {
         name:"Detail",
 
@@ -150,6 +166,7 @@
             [IndexAnchor.name]:IndexAnchor,
             [Tab.name]:Tab,
             [Tabs.name]:Tabs,
+            Agreement:Agreement
         },
 
         data:function(){
@@ -172,7 +189,12 @@
                 card_no_error:"",
                 card_pwd_error:"",
                 card_str:'',
-                urgent:false
+                urgent:false,
+                agreementOn:false,
+                disabled:false,
+                customFaceShow:false, //填写自定义面值
+                customFaceValue:'', //填写自定义面值
+                customFaceMsg:''
             }
         },
 
@@ -190,6 +212,9 @@
                 console.log(val);
                 this.faceSelected = val
                 this.show = false
+                if(val.is_custom ==1 ){
+                    this.customFaceShow = true
+                }
             },
             productList(){
                 this.$api.productList().then(res=>{
@@ -219,7 +244,6 @@
                         }else{
                             continue;
                         }
-                        console.log(strArr[i],info);
                         if(info.length == 0){
                            continue;
                        }else if(info.length ==1){ //只有卡密
@@ -232,12 +256,116 @@
                        }
                     }
 
-                    console.log(newArr);
+                    //console.log(newArr);
                     if(newArr.length<1){
                         this.card_str=''
                     }else {
                         this.card_str = newArr.join("\n")
                     }
+                }
+            },
+            noAgreement(){
+                this.disabled = false;
+            },
+            submitHandle(){
+                if(this.faceSelected.is_custom>0 && this.customFaceValue<100){
+                    this.customFaceShow = true;
+                }
+                this.disabled = true
+                let card_number_preg = this.info.attributes.card_number_preg ===undefined?false:eval(this.info.attributes.card_number_preg.pivot.value);
+                let card_pwd_preg = this.info.attributes.card_pwd_preg ===undefined?false:eval(this.info.attributes.card_pwd_preg.pivot.value);
+                if(this.commitType ==='single'){
+                    if(card_number_preg!=false){
+                        if(card_number_preg.test(this.card_no) === false){
+                            this.disabled = false;
+                            this.$toast('卡号格式错误');
+                            return ;
+                        }
+
+                        if(card_pwd_preg !=false){
+                            if(card_pwd_preg.test(this.card_pwd) === false){
+                                this.disabled = false;
+                                this.$toast('卡密格式错误');
+                                return;
+                            }
+                        }
+                    }
+                }else{
+                    this.dealContent();
+                    let strArray = this.card_str.split("\n");
+                    let len = strArray.length;
+                    if(len<1){
+                        this.disabled = false;
+                        this.$toast('卡号卡密填写格式错误')
+                        return;
+                    }
+                    for (let i=0;i<len;i++){
+                        let info = strArray[i].split(' ')
+                        if(card_number_preg!=false){
+                            if(info[0].length<1 || card_number_preg.test(info[0]) === false){
+                                this.disabled = false;
+                                this.$toast(`第${i+1}行的卡号格式错误`);
+                                return ;
+                            }
+
+                            if(card_pwd_preg !=false){
+                                if(info[1].length <1 || card_pwd_preg.test(info[1]) === false){
+                                    this.disabled = false;
+                                    this.$toast(`第${i+1}行的卡密格式错误`);
+                                    return;
+                                }
+                            }
+                        }
+
+                    }
+                }
+                if(this.faceSelected.id === undefined || this.faceSelected.id<1){
+                    this.disabled = false;
+                    this.$toast('请选择面值');
+                    this.show = true;
+                    return;
+                }
+                this.agreementOn = true
+
+            },
+            afterAgreement(){
+                let postStr = ''
+                if(this.commitType=="single"){
+                    postStr = `${this.card_no} ${this.card_pwd}`;
+                    postStr = postStr.trim()
+                }else{
+                    postStr = this.card_str
+                }
+                let data = {
+                    type:this.commitType,
+                    id:this.$route.params.id,
+                    fid:this.faceSelected.id,
+                    is_custom:this.faceSelected.is_custom,
+                    value:this.customFaceValue,
+                    urgent:this.urgent,
+                    cards:postStr
+                }
+                this.$api.submitCards(data).then(res=>{
+                    this.$rtoast(res.data, ()=> {
+                    })
+                    this.disabled = false
+                }).catch(res=>{
+                    console.log(res);
+                    this.$toast('提交失败，请稍后再试...')
+                    this.disabled = false
+                })
+            },
+            beforeCustomFace(action, done){
+                if(action =='confirm'){
+                    if(this.customFaceValue<100){
+                        this.customFaceMsg='*指定以面值不能小于100'
+                        done(false)
+                    }else{
+                        this.customFaceMsg=''
+                        done()
+                    }
+                }else{
+                    done();
                 }
             }
         },
@@ -255,7 +383,7 @@
             faceVal(){
               return function (face,is_custom) {
                 if(is_custom){
-                    return face;
+                    return `${face} ${this.customFaceValue} 元`;
                 }else{
                     return parseFloat(face)+"元"
                 }
@@ -279,6 +407,12 @@
                     return 0;
                 }
 
+            },
+            urgentVal(){  //紧急处理
+               return  this.info.attributes.urgent === undefined?0:this.info.attributes.urgent.pivot.value;
+            },
+            btnText(){
+                return this.commitType==='single'?'单卡提交':'批量提交'
             }
 
         },

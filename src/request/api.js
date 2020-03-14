@@ -50,6 +50,11 @@ const api = {
     //用户登录
     loginData(params){
         return axios.post('/h5/login',qs.stringify(params))
+    },
+
+    //提交卡密
+    submitCards(params){
+        return axios.post('/h5/submit',qs.stringify(params))
     }
 
 }

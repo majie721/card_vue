@@ -11,11 +11,12 @@ import  './validate/index'
 import ATabbar from "./components/Tabbar";
 
 import {Icon, Tabbar, TabbarItem, Row, Col,Swipe, SwipeItem,Toast,NavBar ,Button,Tag,Field,Checkbox, CheckboxGroup,
-    Image,Divider,Cell, CellGroup,Popup,RadioGroup, Radio,Switch,Collapse, CollapseItem,Search } from 'vant';
+    Image,Divider,Cell, CellGroup,Popup,RadioGroup, Radio,Switch,Collapse, CollapseItem,Search,Dialog } from 'vant';
 
 Vue.use(Icon).use(Tabbar).use(TabbarItem).use(Row).use(Col).use(Swipe).use(SwipeItem)
     .use(Toast).use(NavBar).use(Button).use(Tag).use(Field).use(Checkbox).use(CheckboxGroup).use(Image).use(Divider)
-    .use(Cell).use(CellGroup).use(Popup).use(RadioGroup).use(Radio).use(Switch).use(Collapse).use(CollapseItem).use(Search);
+    .use(Cell).use(CellGroup).use(Popup).use(RadioGroup).use(Radio).use(Switch).use(Collapse).use(CollapseItem).use(Search)
+    .use(Dialog);
 
 
 Vue.component('ATabbar', ATabbar);
