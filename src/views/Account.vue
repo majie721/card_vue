@@ -31,25 +31,25 @@
         </van-divider>
         <div>
             <van-row class="user-info">
-                <van-col span="6">
+                <van-col span="6" @click="clickHandle('/withdraw')">
                     <div class="buss-png">
                         <van-icon  class="iconfont van-icon iconyue1" dot  color="#fbbd08"></van-icon>
                     </div>
-                   <span class="buss-name">账户余额</span>
+                   <span class="buss-name">提现</span>
                 </van-col>
-                <van-col span="6">
+                <van-col span="6" @click="clickHandle('/orders')">
                     <div class="buss-png">
                         <van-icon  class="iconfont van-icon iconicon-" color="#1989fa"></van-icon>
                     </div>
-                    <span class="buss-name">历史订单</span>
+                    <span class="buss-name">我的订单</span>
                 </van-col>
-                <van-col span="6">
+                <van-col span="6" @click="clickHandle('/workOrders')">
                     <div class="buss-png">
                         <van-icon  class="iconfont van-icon iconorder" info="10" color="#1cbbb4"></van-icon>
                     </div>
                     <span class="buss-name">我的工单</span>
                 </van-col>
-                <van-col span="6">
+                <van-col span="6" @click="clickHandle('/messages')">
                     <div class="buss-png">
                         <van-icon  class="iconfont van-icon iconxiaoxi" info="10" color="#39b54a"></van-icon>
                     </div>
@@ -81,6 +81,9 @@
         methods:{
             initData:function () {
                 this.$api.accountsData().then(res=>this.accountType=res.data.data)
+            },
+            clickHandle:function (path) {
+                this.$router.push(path)
             }
         },
 

@@ -55,6 +55,11 @@ const api = {
     //提交卡密
     submitCards(params){
         return axios.post('/h5/submit',qs.stringify(params))
+    },
+
+    //订单记录
+    orders(params){
+        return axios.get('/h5/orders?'+qs.stringify(params))
     }
 
 }

@@ -8,7 +8,7 @@
         />
 
 
-
+        <div v-if="loading">
         <div class="bank-list" v-if="list.length==0">
             <div class="kong">
                 <img src="../assets/kong2.png" alt="">
@@ -63,7 +63,7 @@
                 @updateData="initData" ></AccountEdit>
         <van-button round class="add-btn" size="large" type="info" @click="popupShow=true">添加账号</van-button>
         <p style="text-align: center;color: #f37b1d">如需添加对公账号,请联系客服处理~</p>
-
+        </div>
     </div>
 </template>
 
@@ -79,6 +79,7 @@
 
         data:function () {
             return {
+                loading:false,
                 list:[], //用户收款账号列表
                 accountTypes:{},
                 popupShow:false,
@@ -96,6 +97,7 @@
         methods:{
             initData:function () {
                 this.$api.accountsData().then(res=>{
+                    this.loading = true;
                     this.accountTypes=res.data.data.type;
                     this.list=res.data.data.accounts;
                     if(this.list.length>0){

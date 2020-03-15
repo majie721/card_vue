@@ -204,7 +204,6 @@ abcdefg 123456"
             },
             getProductInfo(){
                 this.$api.productInfo(this.$route.params.id).then(res=>{
-                    console.log(res);
                     this.info = res.data.data;
                 })
             },
@@ -281,13 +280,13 @@ abcdefg 123456"
                             this.$toast('卡号格式错误');
                             return ;
                         }
+                    }
 
-                        if(card_pwd_preg !=false){
-                            if(card_pwd_preg.test(this.card_pwd) === false){
-                                this.disabled = false;
-                                this.$toast('卡密格式错误');
-                                return;
-                            }
+                    if(card_pwd_preg !=false){
+                        if(card_pwd_preg.test(this.card_pwd) === false){
+                            this.disabled = false;
+                            this.$toast('卡密格式错误');
+                            return;
                         }
                     }
                 }else{

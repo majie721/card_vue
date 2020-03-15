@@ -5,6 +5,10 @@ import Sell from "../views/Sell.vue";
 import Account from "../views/Account.vue";
 import BankList from "../views/BankList.vue";
 import Login from "../views/Login.vue";
+import Withdraw from "../views/Withdraw.vue";
+import Orders from "../views/Orders.vue";
+import WorkOrders from "../views/WorkOrders.vue";
+import Messages from "../views/Messages.vue";
 
 
 
@@ -49,6 +53,26 @@ const routes = [
     path: "/questions",
     name: "questions",
     component: ()=>import( "../views/Questions.vue")
+  },
+  {
+    path: "/withdraw",
+    name: "withdraw",
+    component:Withdraw
+  },
+  {
+    path: "/orders",
+    name: "orders",
+    component:Orders
+  },
+  {
+    path: "/workOrders",
+    name: "workOrders",
+    component:WorkOrders
+  },
+  {
+    path: "/messages",
+    name: "messages",
+    component:Messages
   },
   {
     path: "/feedback",
