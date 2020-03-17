@@ -14,12 +14,12 @@
                             :round="true"
                             width="80"
                             height="80"
-                            src="https://img.yzcdn.cn/vant/cat.jpeg"
+                            :src="userInfo.avatar|cdn"
                     />
                 </van-col>
                 <van-col span="15">
-                        <div class="name">马杰&nbsp;&nbsp;&nbsp; <span>【ID:93322】</span></div>
-                        <div class="text">余额:￥999999.99</div>
+                        <div class="name">{{userInfo.name}}&nbsp;&nbsp;&nbsp; <span>【ID:{{userInfo.id}}】</span></div>
+                        <div class="text">余额:￥{{userInfo.balance}}</div>
                 </van-col>
             </van-row>
         </div>
@@ -45,7 +45,7 @@
                 </van-col>
                 <van-col span="6" @click="clickHandle('/workOrders')">
                     <div class="buss-png">
-                        <van-icon  class="iconfont van-icon iconorder" info="10" color="#1cbbb4"></van-icon>
+                        <van-icon  class="iconfont van-icon iconorder"  color="#1cbbb4"></van-icon>
                     </div>
                     <span class="buss-name">我的工单</span>
                 </van-col>
@@ -75,15 +75,26 @@
         data:function(){
             return {
                 accountType:{},
+                userInfo:{},
             }
         },
 
         methods:{
             initData:function () {
+                this.$api.userInfo().then(res=>{
+                    console.log(res.data.data);
+                    this.userInfo = res.data.data
+
+                })
                 this.$api.accountsData().then(res=>this.accountType=res.data.data)
             },
             clickHandle:function (path) {
-                this.$router.push(path)
+                if('/workOrders' ==path){
+                    return this.$toast.fail('功能暂未开放');
+                }else{
+                    this.$router.push(path)
+                }
+
             }
         },
 

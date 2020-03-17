@@ -25,10 +25,10 @@
                 >
                     <div slot="title" class="otitle">
                         <van-row>
-                            <van-col span="20">
+                            <van-col span="18">
                                 <span>{{item.product_name}}</span>
                             </van-col>
-                            <van-col span="4">
+                            <van-col span="6" style="text-align: end">
                                 <span class="ostatus" :style="StatusColor(item.status)">{{item.status_name}}</span>
                             </van-col>
                         </van-row>
@@ -41,10 +41,10 @@
                     </div>
                     <div slot="desc">
                         <van-row>
-                            <van-col span="12">
+                            <van-col span="10">
                                 订单ID: &nbsp;&nbsp;{{item.id}}
                             </van-col>
-                            <van-col span="12">
+                            <van-col span="14" style="text-align: end" >
                                 <span style="color:#8799a3">{{item.created_at}}</span>
                             </van-col>
                         </van-row>
@@ -75,7 +75,7 @@
 
                     <div slot="footer">
                         <van-button plain hairline size="small" @click="copyOrderID(item.id)">复制订单号</van-button>
-                        <van-button type="info" size="small">订单详情</van-button>
+                        <van-button type="info" @click="toDetails(item.id)" size="small">订单详情</van-button>
                     </div>
                 </van-card>
             </van-list>
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-    import { Tab, Tabs,Card,Grid, GridItem} from "vant";
+    import { Tab, Tabs,Card} from "vant";
 
     export default {
         name: "Orders",
@@ -93,8 +93,6 @@
             [Tab.name]: Tab,
             [Tabs.name]: Tabs,
             [Card.name]: Card,
-            [Grid.name]: Grid,
-            [GridItem.name]: GridItem,
         },
 
         data() {
@@ -114,7 +112,7 @@
                 }
 
                 this.$api.orders(param).then(res=>{
-                    console.log(res.data);
+                    //console.log(res.data);
                     this.loading = false;
                     this.list.push(...res.data.data.data)
                     if(res.data.data.next_page_url==null){
@@ -134,13 +132,17 @@
             copyOrderID(id){
                 this.$copyText(id).then(
                     res => {
-                        console.log(res)
+                        //console.log(res)
                         this.$toast(`复制成功【ID:${id}】，可直接去粘贴`);
                     },
                     err => {
                         this.$toast("复制失败");
                     }
                 )
+            },
+            toDetails(id){
+                let otype = this.active ==0?1:2;
+                this.$router.push(`/ordersDetails/${id}/${otype}`)
             }
         },
         computed:{
@@ -175,6 +177,7 @@
 
     .ostatus{
         font-weight: 600;
+        margin-left: 10px;
     }
 
     .th_amount{

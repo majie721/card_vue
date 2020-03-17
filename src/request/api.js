@@ -60,6 +60,26 @@ const api = {
     //订单记录
     orders(params){
         return axios.get('/h5/orders?'+qs.stringify(params))
+    },
+
+    //订单详情
+    orderDetails(params){
+        return axios.get('/h5/order_details?'+qs.stringify(params))
+    },
+
+    //用户消息列表
+    message(){
+        return axios.get('/h5/users_message')
+    },
+
+    //用户消息列表
+    read_message(params){
+        return axios.post('/h5/users_message',qs.stringify(params))
+    },
+
+    //用户的账号信息
+    userInfo(){
+        return axios.post('/h5/user')
     }
 
 }

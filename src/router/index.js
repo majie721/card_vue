@@ -9,6 +9,7 @@ import Withdraw from "../views/Withdraw.vue";
 import Orders from "../views/Orders.vue";
 import WorkOrders from "../views/WorkOrders.vue";
 import Messages from "../views/Messages.vue";
+import OrdersDetails from "../views/OrdersDetails.vue";
 
 
 
@@ -63,6 +64,11 @@ const routes = [
     path: "/orders",
     name: "orders",
     component:Orders
+  },
+  {
+    path: "/ordersDetails/:id/:type",
+    name: "ordersDetails",
+    component:OrdersDetails
   },
   {
     path: "/workOrders",
