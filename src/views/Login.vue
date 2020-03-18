@@ -84,6 +84,7 @@
                                     let   path = redirect.length>0?redirect:'/'
                                     this.$router.replace(path)
                                     localStorage.setItem('token', res.data.data.token);
+                                    localStorage.setItem('user', JSON.stringify(res.data.data));
 
                                 }
                             })

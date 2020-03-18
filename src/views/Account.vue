@@ -18,8 +18,9 @@
                     />
                 </van-col>
                 <van-col span="15">
-                        <div class="name">{{userInfo.name}}&nbsp;&nbsp;&nbsp; <span>【ID:{{userInfo.id}}】</span></div>
-                        <div class="text">余额:￥{{userInfo.balance}}</div>
+                        <div class="name">{{userInfo.name}}</div>
+                        <div class="text"><span class="lable">余额</span>:￥{{balance}}</div>
+                        <div class="id"><span class="lable">账号ID</span>:{{userInfo.id}}</div>
                 </van-col>
             </van-row>
         </div>
@@ -51,7 +52,8 @@
                 </van-col>
                 <van-col span="6" @click="clickHandle('/messages')">
                     <div class="buss-png">
-                        <van-icon  class="iconfont van-icon iconxiaoxi" info="10" color="#39b54a"></van-icon>
+                        <van-icon v-if="unreadNum>0"  class="iconfont van-icon iconxiaoxi" :info="unreadNum" color="#39b54a"></van-icon>
+                        <van-icon v-else  class="iconfont van-icon iconxiaoxi"  color="#39b54a"></van-icon>
                     </div>
                     <span class="buss-name">消息中心</span>
                 </van-col>
@@ -76,16 +78,28 @@
             return {
                 accountType:{},
                 userInfo:{},
+                balance:'--.--',
+                unreadNum:0
             }
         },
 
         methods:{
             initData:function () {
-                this.$api.userInfo().then(res=>{
-                    console.log(res.data.data);
-                    this.userInfo = res.data.data
+                let userInfo  = JSON.parse( localStorage.getItem('user'))
+                if(userInfo.id>0){
+                    this.userInfo = userInfo;
+                    this.$api.userBalance().then(res=>{
+                        this.balance = res.data.data.balance
+                        this.unreadNum = res.data.data.unreadMsgNum
 
-                })
+                    })
+                }else{
+                    this.$api.userInfo().then(res=>{
+                        this.userInfo = res.data.data
+                        this.balance = res.data.data.balance
+                    })
+                }
+
                 this.$api.accountsData().then(res=>this.accountType=res.data.data)
             },
             clickHandle:function (path) {
@@ -157,6 +171,21 @@
         padding: 0px;
         text-align:left ;
         margin-top: 2px;
+    }
+
+    .user-base .id{
+        font-size: 10px;
+        height: 14px;
+        line-height: 14px;
+        padding: 0px;
+        text-align:left ;
+        margin-top: 2px;
+    }
+
+    .user-base .lable{
+        width: 40px;
+        text-align-last: justify;
+        display: inline-block;
     }
 
     .info{

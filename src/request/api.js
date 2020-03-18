@@ -68,11 +68,11 @@ const api = {
     },
 
     //用户消息列表
-    message(){
-        return axios.get('/h5/users_message')
+    message(page){
+        return axios.get('/h5/users_message?page='+page)
     },
 
-    //用户消息列表
+    //更新已读消息
     read_message(params){
         return axios.post('/h5/users_message',qs.stringify(params))
     },
@@ -80,8 +80,12 @@ const api = {
     //用户的账号信息
     userInfo(){
         return axios.post('/h5/user')
-    }
+    },
 
+    //用户的余额/消息数量
+    userBalance(type){
+        return axios.get('/h5/user_data?type='+type)
+    }
 }
 
 export default api;

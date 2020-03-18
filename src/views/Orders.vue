@@ -66,8 +66,8 @@
                                 <div class="th_amount ath_center">成功总额 <van-icon name="question-o" /></div>
                                 <div class="td_amount atd_center">{{item.success_amount}}</div>
                             </van-col>
-                            <van-col span="8" @click="$toast('成功总额 = 成功总额×️折扣-加急处理费')">
-                                <div class="th_amount ath_right">成功总额<van-icon name="question-o" /></div>
+                            <van-col span="8" @click="$toast('结算总额 = 成功总额×️折扣-加急处理费')">
+                                <div class="th_amount ath_right">结算总额<van-icon name="question-o" /></div>
                                 <div class="td_amount atd_right">{{item.pay_amount}}</div>
                             </van-col>
                         </van-row>
