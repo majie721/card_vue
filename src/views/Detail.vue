@@ -151,6 +151,7 @@ abcdefg 123456"
 <script>
     import {  Grid, GridItem,ActionSheet,Cell, CellGroup,Popup ,IndexBar, IndexAnchor,Tab, Tabs} from 'vant';
     import Agreement from '../components/Agreement'
+    import {hideLoading, showLoading} from "../tools/loading";
 
     export default {
         name:"Detail",
@@ -203,7 +204,9 @@ abcdefg 123456"
                 this.show=true
             },
             getProductInfo(){
+                showLoading();
                 this.$api.productInfo(this.$route.params.id).then(res=>{
+                    hideLoading();
                     this.info = res.data.data;
                 })
             },
@@ -216,9 +219,10 @@ abcdefg 123456"
                 }
             },
             productList(){
+                showLoading()
                 this.$api.productList().then(res=>{
+                    hideLoading()
                     this.list = res.data.data
-                    console.log(this.list);
                 })
             },
             onProductSelect(item){
@@ -344,12 +348,15 @@ abcdefg 123456"
                     urgent:this.urgent,
                     cards:postStr
                 }
+                showLoading()
                 this.$api.submitCards(data).then(res=>{
+                    hideLoading();
                     this.$rtoast(res.data, ()=> {
                     })
                     this.disabled = false
                 }).catch(res=>{
                     console.log(res);
+                    hideLoading();
                     this.$toast('提交失败，请稍后再试...')
                     this.disabled = false
                 })

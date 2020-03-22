@@ -85,6 +85,16 @@ const api = {
     //用户的余额/消息数量
     userBalance(type){
         return axios.get('/h5/user_data?type='+type)
+    },
+
+    //用户发短信验证码
+    sms(params){
+        return axios.post('/h5/sms',qs.stringify(params))
+    },
+
+    //用户注册
+    register(params){
+        return axios.post('/h5/register',qs.stringify(params))
     }
 }
 

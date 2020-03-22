@@ -4,11 +4,11 @@ import VeeValidate, {Validator} from 'vee-validate'
 
 Validator.extend('username',{
     messages: {
-        en:field => field + '必须是11位手机号码或者邮箱号码',
-        zh_CN:field =>   '用户名必须是11位手机号码或者邮箱号码',
+        en:field => field + '必须是11位手机号码',
+        zh_CN:field =>   '必须是11位手机号码',
     },
     validate: value => {
-        return (/^1[3456789]\d{9}$/.test(value) || /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test(value))
+        return (/^1[3456789]\d{9}$/.test(value))
     },
 })
 
@@ -33,7 +33,7 @@ Validator.localize('zh_CN', {
         alpha: () => `${fieldName}只能包含字母字符`,
         before: (field, [target]) => `${fieldName}必须在${target}之前`,
         between: (field, [min, max]) => `${fieldName}必须在${min}与${max}之间`,
-        confirmed: (field, [confirmedField]) => `${fieldName}不能和${confirmedField}匹配`,
+        confirmed: (field, [confirmedField]) => `${fieldName}和密码不符`,
         credit_card: () => `${fieldName}格式错误`,
         date_between: (field, [min, max]) => `${fieldName}必须在${min}和${max}之间`,
         date_format: (field, [format]) => `${fieldName}必须符合${format}格式`,

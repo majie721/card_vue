@@ -40,6 +40,7 @@
 
 <script>
     import { Tab, Tabs , Sidebar, SidebarItem,Card,ActionSheet} from 'vant';
+    import {hideLoading, showLoading} from "../tools/loading";
 
     export default {
         name: "Sell",
@@ -96,9 +97,10 @@
         },
 
         created() {
+            showLoading()
              this.$api.productData().then(
                 res=>{
-                   // console.log(res.data);
+                   hideLoading();
                     this.list=res.data.data
                 }
             )

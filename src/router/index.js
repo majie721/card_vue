@@ -10,6 +10,7 @@ import Orders from "../views/Orders.vue";
 import WorkOrders from "../views/WorkOrders.vue";
 import Messages from "../views/Messages.vue";
 import OrdersDetails from "../views/OrdersDetails.vue";
+import Register from "../views/Register.vue";
 
 
 
@@ -84,6 +85,11 @@ const routes = [
     path: "/feedback",
     name: "feedback",
     component: ()=>import( "../views/Feedback.vue")
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register
   }
   // {
   //   path: "/about",

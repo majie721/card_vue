@@ -13,12 +13,12 @@
             <van-cell-group>
                 <van-field
                         v-model="username"
-                        label="用户名"
+                        label="手机号码"
                         left-icon="manager"
                         name="username"
                         v-validate="'required|username'"
                         :error-message="errors.first('username')"
-                        placeholder="邮箱或者手机号码格式"
+                        placeholder="填写手机号码"
                 />
 
                 <van-field
@@ -45,8 +45,8 @@
                 登录
             </van-button>
 
-            <div style="padding-left: 30%;padding-top: 10px">
-                <a> 注册</a>
+            <div style="padding-left: 30%;padding-top: 10px;color: #fffbe8">
+                <a @click="$router.push('/register')"> 注册</a>
                 <a style="margin-left: 50px"> 忘记密码</a>
             </div>
 
@@ -63,8 +63,8 @@
         name: "Login",
         data() {
             return {
-                username: '18823418491',
-                password: 'Hm_Admin_asdYHN',
+                username:this.$route.query.name==undefined?'':this.$route.query.name,
+                password: '',
                 disabled:false
             };
         },
@@ -81,7 +81,7 @@
                             this.$rtoast(res.data, ()=> {
                                 if(res.data.ret==0){
                                     let redirect = this.$route.query.redirect
-                                    let   path = redirect.length>0?redirect:'/'
+                                    let   path = (redirect!=undefined&& redirect.length>0)?redirect:'/'
                                     this.$router.replace(path)
                                     localStorage.setItem('token', res.data.data.token);
                                     localStorage.setItem('user', JSON.stringify(res.data.data));

@@ -46,6 +46,7 @@
 <script>
     import { mapActions } from 'vuex'
     import { Image,NoticeBar, Grid, GridItem,ActionSheet } from 'vant';
+    import {hideLoading, showLoading} from "../tools/loading";
     export default {
         name: "Home",
         components:{
@@ -71,8 +72,10 @@
         methods:{
             ...mapActions(['getUserInfo']),
             homeData:function () {
+                showLoading()
                 this.$api.homeData().then(
                     res=>{
+                        hideLoading();
                         this.bannerList = res.data.data.banner
                         this.notice = res.data.data.notice
                         this.recommend = res.data.data.recommend
