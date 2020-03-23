@@ -14,12 +14,12 @@ import ATabbar from "./components/Tabbar";
 
 import {Icon, Tabbar, TabbarItem, Row, Col,Swipe, SwipeItem,Toast,NavBar ,Button,Tag,Field,Checkbox, CheckboxGroup,
     Image,Divider,Cell, CellGroup,Popup,RadioGroup, Radio,Switch,Collapse, CollapseItem,Search,Dialog,List,PullRefresh,
-    Step, Steps,CountDown ,Loading} from 'vant';
+    Step, Steps,CountDown ,Loading,ActionSheet} from 'vant';
 
 Vue.use(Icon).use(Tabbar).use(TabbarItem).use(Row).use(Col).use(Swipe).use(SwipeItem)
     .use(Toast).use(NavBar).use(Button).use(Tag).use(Field).use(Checkbox).use(CheckboxGroup).use(Image).use(Divider)
     .use(Cell).use(CellGroup).use(Popup).use(RadioGroup).use(Radio).use(Switch).use(Collapse).use(CollapseItem).use(Search)
-    .use(Dialog).use(List).use(VueClipboard).use(PullRefresh).use(Step).use(Steps).use(CountDown).use(Loading);
+    .use(Dialog).use(List).use(VueClipboard).use(PullRefresh).use(Step).use(Steps).use(CountDown).use(Loading).use(ActionSheet);
 
 
 Vue.component('ATabbar', ATabbar);

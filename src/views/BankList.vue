@@ -69,6 +69,7 @@
 
 <script>
     import AccountEdit from '../components/AccountEdit'
+    import {hideLoading, showLoading} from "../tools/loading";
     export default {
 
         name: "BankList",
@@ -97,6 +98,7 @@
         methods:{
             initData:function () {
                 this.$api.accountsData().then(res=>{
+                    hideLoading();
                     this.loading = true;
                     this.accountTypes=res.data.data.type;
                     this.list=res.data.data.accounts;
@@ -109,6 +111,8 @@
                             }
                         }
                     }
+                }).catch(res=>{
+                    this.loading = true
                 })
             },
             typePng:function (type) {
@@ -153,6 +157,7 @@
         },
 
         created() {
+            showLoading()
             this.initData();
         }
 

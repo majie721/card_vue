@@ -82,9 +82,14 @@ const api = {
         return axios.post('/h5/user')
     },
 
-    //用户的余额/消息数量
-    userBalance(type){
+    //用户的数据(余额/消息数量)
+    userData(type){
         return axios.get('/h5/user_data?type='+type)
+    },
+
+    //用户的余额
+    userBalance(type){
+        return axios.get('/h5/user_balance?type='+type)
     },
 
     //用户发短信验证码

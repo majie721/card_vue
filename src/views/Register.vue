@@ -151,8 +151,10 @@
                         }
                         this.$api.register(data).then(res=>{
                             this.$rtoast(res.data, ()=> {
-                                let moblie = this.username
-                                this.$router.push(`/login?name=${moblie}`)
+                                if(res.data.ret ==0){
+                                    let moblie = this.username
+                                    this.$router.push(`/login?name=${moblie}`)
+                                }
                             })
 
                             this.disabled = false

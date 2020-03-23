@@ -126,6 +126,12 @@
     }
 </script>
 
+<style>
+    .kefu{
+        color: #0081ff;
+    }
+</style>
+
 <style scoped>
     .home-box{
         width: 98%;
@@ -164,8 +170,6 @@
         color: #e54d42;
     }
 
-    .kefu{
-        color: #0081ff;
-    }
+
 
 </style>

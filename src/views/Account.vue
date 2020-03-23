@@ -88,7 +88,7 @@
                 let userInfo  = JSON.parse( localStorage.getItem('user'))
                 if(userInfo.id>0){
                     this.userInfo = userInfo;
-                    this.$api.userBalance().then(res=>{
+                    this.$api.userData().then(res=>{
                         this.balance = res.data.data.balance
                         this.unreadNum = res.data.data.unreadMsgNum
 
