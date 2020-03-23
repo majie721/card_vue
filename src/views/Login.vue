@@ -1,16 +1,17 @@
 <template>
     <div id="login">
         <div id="bg">
+            <h2 class="title">销卡大师</h2>
             <van-image
                     width="100"
                     height="100"
                     round
                     src="https://hm-1258945893.cos.ap-chengdu.myqcloud.com/card/logo3.png"
             />
-            <h4 class="title">销卡大师</h4>
         </div>
         <div class="form">
             <van-cell-group>
+                <h4 class="title" style="text-align: center">登录 </h4>
                 <van-field
                         v-model="username"
                         label="手机号码"
@@ -47,7 +48,7 @@
 
             <div style="padding-left: 30%;padding-top: 10px;color: #fffbe8">
                 <a @click="$router.push('/register')"> 注册</a>
-                <a style="margin-left: 50px"> 忘记密码</a>
+                <a @click="$router.push('/resetPassword')" style="margin-left: 50px"> 忘记密码</a>
             </div>
 
 
@@ -117,12 +118,13 @@
 
     #bg{
         text-align: center;
-        height: 100px;
-        margin-top: 100px;
+        min-height: 100px;
+        margin-top: 60px;
     }
 
     .title{
         color: #fffbe8;
+        margin: 15px 0;
     }
     #login>>> .van-field{
         border: 1px solid #ffffff !important;
@@ -136,7 +138,7 @@
 
     .form{
         width: 75%;
-        margin: 60px auto;
+        margin: 15px auto;
     }
 
     .van-cell-group{

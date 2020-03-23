@@ -12,7 +12,7 @@
             </van-tabbar-item>
 
             <van-tabbar-item name="buy">
-                <span>买卡</span>
+                <span>权益</span>
                 <i  slot="icon" class="iconfont van-icon iconmai1"></i>
             </van-tabbar-item>
 

@@ -11,7 +11,7 @@
         </div>
         <div class="form">
             <van-cell-group>
-                <h4 class="title" style="text-align: center">注册 </h4>
+                <h4 class="title" style="text-align: center">重置密码</h4>
                 <van-field
                         v-model="username"
                         label="手机号码"
@@ -74,7 +74,7 @@
                     :disabled="disabled"
                     @click="login"
                     block>
-                注册
+                提交
             </van-button>
 
             <div style="padding-top: 20px;color: #fffbe8;text-align: center">
@@ -91,7 +91,7 @@
 
 <script>
     export default {
-        name: "Register",
+        name: "ResetPassword",
         data() {
             return {
                 username: '',
@@ -109,20 +109,20 @@
         methods:{
             smsSend:function(){
                 if(!(/^1[3456789]\d{9}$/.test(this.username))){
-                  return   this.$toast('手机号码填写错误');
+                    return   this.$toast('手机号码填写错误');
                 }else{
                     if(this.time>0){
                         return   this.$toast('请稍后再发');
                     }else{
                         let param ={
-                            type:'register',
+                            type:'resetPassword',
                             mobile:this.username
                         }
-                        this.$api.registerSms(param).then(res=>{
+                        this.$api.pwdSms(param).then(res=>{
                             console.log(res);
                             this.$rtoast(res.data, ()=> {
                                 if(res.data.ret==0){
-                                    localStorage.setItem('register_sms', new Date().getTime()+60000);
+                                    localStorage.setItem('reset_pwd_sms', new Date().getTime()+60000);
                                     this.time = 60000;
                                 }
                             })
@@ -133,7 +133,7 @@
             },
             timeLive(){
                 let now = new Date().getTime();
-                let time =  localStorage.getItem('register_sms')- now;
+                let time =  localStorage.getItem('reset_pwd_sms')- now;
                 this.time = time<0?0:time;
             },
             timeChange(val){
@@ -150,7 +150,7 @@
                             password1:this.password1,
                             code:this.sms,
                         }
-                        this.$api.register(data).then(res=>{
+                        this.$api.resetPwd(data).then(res=>{
                             this.$rtoast(res.data, ()=> {
                                 if(res.data.ret ==0){
                                     let moblie = this.username

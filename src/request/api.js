@@ -93,6 +93,11 @@ const api = {
     },
 
     //用户发短信验证码
+    registerSms(params){
+        return axios.post('/h5/register_sms',qs.stringify(params))
+    },
+
+    //发送验证码
     sms(params){
         return axios.post('/h5/sms',qs.stringify(params))
     },
@@ -100,6 +105,16 @@ const api = {
     //用户注册
     register(params){
         return axios.post('/h5/register',qs.stringify(params))
+    },
+
+    //重置密码发送验证码
+    pwdSms(params){
+        return axios.post('/h5/reset_password_sms',qs.stringify(params))
+    },
+
+    //重置密码
+    resetPwd(params){
+        return axios.post('/h5/reset_password',qs.stringify(params))
     }
 }
 

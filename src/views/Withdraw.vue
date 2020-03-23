@@ -30,7 +30,6 @@
             </div>
         </div>
 
-        <van-button type="primary" @click="confrimWithdraw">登录</van-button>
         <van-dialog
                 v-model="isShow"
                 show-cancel-button

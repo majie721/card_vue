@@ -31,6 +31,24 @@
                         :error-message="errors.first('account_name')"
                 />
 
+                <van-field
+                        v-model="sms"
+                        center
+                        clearable
+                        label="短信验证码"
+                        placeholder="请输入短信验证码"
+                        name="sms"
+                        v-validate="'required'"
+                        :error-message="errors.first('sms')"
+                >
+                    <template #button>
+                        <van-button v-if="time<=0" size="small" @click="smsSend()" round type="primary">发送验证码</van-button>
+                        <van-button v-else size="small" disabled round type="primary">
+                            <van-count-down @finish='timeChange'  :time="time" format=" ss 秒" />
+                        </van-button>
+                    </template>
+                </van-field>
+
             </van-cell-group>
 
             <van-cell class="edit-popup-item" title="设为默认收款账号" >
@@ -69,7 +87,10 @@
                 account_no:'',
                 account_name:"",
                 is_default:'',
-                id:0
+                id:0,
+                smsDisabled:false,
+                sms:'',
+                time:0
             }
         },
 
@@ -82,18 +103,45 @@
                             type:this.type,
                             account_no: this.account_no,
                             account_name: this.account_name,
+                            code:this.sms,
                             default:this.len>0?this.is_default:true, //如果是添加第一张卡,设置为默认
                         }
                         this.$api.addUserAccount(param).then(res=>{
-                            this.$rtoast(res.data,function () {
-
+                            this.$rtoast(res.data, ()=> {
+                                if(res.data.ret==0){
+                                    this.$emit('update:editPopupShow',false);
+                                    this.$emit('updateData'); //更新父组件的数据
+                                }
                             });
-                            this.$emit('update:editPopupShow',false);
-                            this.$emit('updateData'); //更新父组件的数据
                         })
                     }
                 })
-            }
+            },
+            smsSend:function(){
+                if(this.time>0){
+                    return   this.$toast('请稍后再发');
+                }else{
+                    let param ={
+                        type:'bankEdit',
+                    }
+                    this.$api.sms(param).then(res=>{
+                        this.$rtoast(res.data, ()=> {
+                            if(res.data.ret==0){
+                                localStorage.setItem('bank_edit_sms', new Date().getTime()+60000);
+                                this.time = 60000;
+                            }
+                        })
+                    })
+                }
+            },
+            timeLive(){
+                let now = new Date().getTime();
+                let time =  localStorage.getItem('bank_edit_sms')- now;
+                this.time = time<0?0:time;
+            },
+            timeChange(val){
+                this.time = 0;
+            },
         },
         computed:{
             accountNameToast(){

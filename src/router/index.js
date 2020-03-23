@@ -11,6 +11,7 @@ import WorkOrders from "../views/WorkOrders.vue";
 import Messages from "../views/Messages.vue";
 import OrdersDetails from "../views/OrdersDetails.vue";
 import Register from "../views/Register.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 
 
@@ -90,6 +91,11 @@ const routes = [
     path: "/register",
     name: "register",
     component: Register
+  },
+  {
+    path: "/resetPassword",
+    name: "resetPassword",
+    component: ResetPassword
   }
   // {
   //   path: "/about",
