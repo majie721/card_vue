@@ -119,7 +119,7 @@
     #bg{
         text-align: center;
         min-height: 100px;
-        margin-top: 60px;
+        margin-top: 60px; 
     }
 
     .title{
