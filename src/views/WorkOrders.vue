@@ -1,15 +1,13 @@
 <template>
-    <div>
-        工单
-    </div>
+  <div>
+    工单
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "WorkOrders"
-    }
+export default {
+  name: "WorkOrders"
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

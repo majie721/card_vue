@@ -13,8 +13,6 @@ import OrdersDetails from "../views/OrdersDetails.vue";
 import Register from "../views/Register.vue";
 import ResetPassword from "../views/ResetPassword.vue";
 
-
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -24,13 +22,13 @@ const routes = [
     component: Home
   },
   {
-    path:'/login',
-    name:'login',
-    component:Login
+    path: "/login",
+    name: "login",
+    component: Login
   },
   {
     path: "/home",
-    redirect:'/'
+    redirect: "/"
   },
   {
     path: "/sell",
@@ -40,12 +38,12 @@ const routes = [
   {
     path: "/detail/:id",
     name: "detail",
-    component: ()=>import( "../views/Detail.vue")
+    component: () => import("../views/Detail.vue")
   },
   {
     path: "/account",
     name: "account",
-    component:Account
+    component: Account
   },
   {
     path: "/bankList",
@@ -55,37 +53,37 @@ const routes = [
   {
     path: "/questions",
     name: "questions",
-    component: ()=>import( "../views/Questions.vue")
+    component: () => import("../views/Questions.vue")
   },
   {
     path: "/withdraw",
     name: "withdraw",
-    component:Withdraw
+    component: Withdraw
   },
   {
     path: "/orders",
     name: "orders",
-    component:Orders
+    component: Orders
   },
   {
     path: "/ordersDetails/:id/:type",
     name: "ordersDetails",
-    component:OrdersDetails
+    component: OrdersDetails
   },
   {
     path: "/workOrders",
     name: "workOrders",
-    component:WorkOrders
+    component: WorkOrders
   },
   {
     path: "/messages",
     name: "messages",
-    component:Messages
+    component: Messages
   },
   {
     path: "/feedback",
     name: "feedback",
-    component: ()=>import( "../views/Feedback.vue")
+    component: () => import("../views/Feedback.vue")
   },
   {
     path: "/register",
