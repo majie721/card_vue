@@ -120,7 +120,13 @@ const api = {
   //客服消息
   customerMessage(){
     return axios.post("/h5/customer_message");
+  },
+
+  usernameCheck(val){
+    return axios.get("/h5/username_check?val="+val);
   }
+
+
 };
 
 export default api;

@@ -13,12 +13,23 @@
       <van-cell-group>
         <h4 class="title" style="text-align: center">注册</h4>
         <van-field
-          v-model="username"
+                v-model="username"
+                label="用户名"
+                left-icon="manager"
+                name="username"
+                @blur="usernameCheck"
+                v-validate="'required|min:2|max:11'"
+                :error-message="nameok?errors.first('username'):'该用户名已被注册'"
+                placeholder="请输入用户名(2-11字符内)"
+        />
+        <van-field
+          style="margin-top: 10px"
+          v-model="mobile"
           label="手机号码"
-          left-icon="manager"
-          name="username"
-          v-validate="'required|username'"
-          :error-message="errors.first('username')"
+          left-icon="phone"
+          name="mobile"
+          v-validate="'required|mobile'"
+          :error-message="errors.first('mobile')"
           placeholder="请输入手机号码"
         />
         <van-field
@@ -103,12 +114,14 @@ export default {
   data() {
     return {
       username: "",
+      mobile:'',
       password: "",
       password1: "",
       disabled: false,
       smsDisabled: false,
       sms: "",
-      time: 0
+      time: 0,
+      nameok:true
     };
   },
   created() {
@@ -116,7 +129,7 @@ export default {
   },
   methods: {
     smsSend: function() {
-      if (!/^1[3456789]\d{9}$/.test(this.username)) {
+      if (!/^1[3456789]\d{9}$/.test(this.mobile)) {
         return this.$toast("手机号码填写错误");
       } else {
         if (this.time > 0) {
@@ -124,7 +137,7 @@ export default {
         } else {
           let param = {
             type: "register",
-            mobile: this.username
+            mobile: this.mobile
           };
           this.$api.registerSms(param).then(res => {
             console.log(res);
@@ -152,10 +165,14 @@ export default {
     },
     login: function() {
       this.disabled = true;
+      if(this.nameok == false){
+        return this.$toast("用户名已被注册,请更换");
+      }
       this.$validator.validateAll().then(res => {
         if (res === true) {
           let data = {
-            username: this.username,
+            name: this.username,
+            mobile:this.mobile,
             password: this.password,
             password1: this.password1,
             code: this.sms
@@ -165,8 +182,8 @@ export default {
             .then(res => {
               this.$rtoast(res.data, () => {
                 if (res.data.ret == 0) {
-                  let moblie = this.username;
-                  this.$router.push(`/login?name=${moblie}`);
+                  let name = this.username;
+                  this.$router.push(`/login?name=${name}`);
                 }
               });
 
@@ -182,6 +199,15 @@ export default {
           this.disabled = false;
         }
       });
+    },
+    usernameCheck:function () {
+      this.$api.usernameCheck(this.username).then(res=>{
+        if(res.data.ret == 0){
+          this.nameok = true
+        }else{
+          this.nameok = false
+        }
+      })
     }
   }
 };

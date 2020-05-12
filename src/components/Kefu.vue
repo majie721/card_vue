@@ -9,7 +9,8 @@
         name: "kefu",
         methods: {
             sendMsg:function () {
-                this.$api.customerMessage().then()
+               //alert(1111)
+               window.location.href="http://wpa.qq.com/msgrd?v=3&uin=1440413448&site=qq&menu=yes"
             }
         }
     }

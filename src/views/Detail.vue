@@ -347,6 +347,15 @@ export default {
       this.disabled = false;
     },
     submitHandle() {
+      let auth = parseInt(localStorage.getItem('auth'))
+      let has_mobile = (auth & 1) ==1; //是否绑定手机
+      let has_no = (auth & 4) ==4;  //是否实名认证
+
+      if(!(has_mobile && has_no)){
+        return  this.toAuth();
+      }
+
+
       if (this.faceSelected.is_custom > 0 && this.customFaceValue < 100) {
         this.customFaceShow = true;
       }
@@ -458,6 +467,23 @@ export default {
       } else {
         done();
       }
+    },
+    toAuth(){
+      let auth = parseInt(localStorage.getItem('auth'))
+      if(auth>0){
+        let has_mobile = (auth & 1) ==1; //是否绑定手机
+        let has_no = (auth & 4) ==4;  //是否实名认证
+        this.$dialog.confirm({
+          title: '实名认证',
+          message: '您还未完成实名认证,完成实名认证后才能提交卡密',
+          cancelButtonText:'稍后认证',
+          confirmButtonText:'立即认证'
+        }).then(() => {
+          this.$router.push('/auth')
+        }).catch(() => {
+
+        })
+      }
     }
   },
 
@@ -517,6 +543,8 @@ export default {
     this.productId = this.$route.params.id;
     this.getProductInfo();
     this.productList();
+
+    this.toAuth()
   }
 };
 </script>

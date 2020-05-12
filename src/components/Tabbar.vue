@@ -11,10 +11,10 @@
         <i slot="icon" class="iconfont van-icon iconmaichu"></i>
       </van-tabbar-item>
 
-      <van-tabbar-item name="buy">
-        <span>权益</span>
-        <i slot="icon" class="iconfont van-icon iconmai1"></i>
-      </van-tabbar-item>
+<!--      <van-tabbar-item name="buy">-->
+<!--        <span>权益</span>-->
+<!--        <i slot="icon" class="iconfont van-icon iconmai1"></i>-->
+<!--      </van-tabbar-item>-->
 
       <van-tabbar-item name="account">
         <span>我的</span>

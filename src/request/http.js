@@ -94,8 +94,9 @@ instance.interceptors.response.use(
   // 请求成功
   res => {
     if (res.data && res.status === 200) {
+      localStorage.setItem('auth',res.data.auth)
       if (res.data.ret == 302) {
-        console.log(router.app.$route.fullPath);
+       // console.log(router.app.$route.fullPath);
         let url = res.data.msg + "?fullPath=" + router.app.$route.fullPath;
         window.location.href = url;
       }

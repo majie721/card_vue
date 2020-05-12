@@ -83,6 +83,7 @@
       </div>
     </div>
     <div class="item">
+      <van-cell title="实名认证" is-link value="未完成" to="auth" />
       <van-cell title="收款账号" is-link value="" to="bankList" />
       <van-cell title="提现记录" is-link value="" />
       <van-cell title="常见问题" is-link value="" to="questions" />
@@ -109,7 +110,7 @@ export default {
     initData: function() {
       console.log(1);
       let str =   localStorage.getItem("user")
-      if(str.length>0){
+      if(str!=undefined &&  str.length>0){
         let userInfo = JSON.parse(str);
         this.userInfo = userInfo;
         this.$api.userData().then(res => {
@@ -132,11 +133,29 @@ export default {
       } else {
         this.$router.push(path);
       }
+    },
+    toAuth:function(){
+      let auth = parseInt(localStorage.getItem('auth'))
+      if(auth>0){
+        let has_mobile = (auth & 1) ==1; //是否绑定手机
+        let has_no = (auth & 4) ==4;  //是否实名认证
+        this.$dialog.confirm({
+          title: '实名认证',
+          message: '您还未完成实名认证,完成实名认证后才能添加收卡账户',
+          cancelButtonText:'稍后认证',
+          confirmButtonText:'立即认证'
+        }).then(() => {
+          this.$router.push('/auth')
+        }).catch(() => {
+
+        })
+      }
     }
   },
 
   created() {
     this.initData();
+    this.toAuth()
   }
 };
 </script>

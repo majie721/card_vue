@@ -17,6 +17,7 @@
       </van-swipe>
     </div>
 
+
     <div class="home-box notice-box">
       <van-notice-bar :text="notice" left-icon="volume-o" />
     </div>
@@ -110,9 +111,11 @@ export default {
       this.$router.push(`/detail/${item.data["id"]}`);
     },
     sendMsg:function () {
-        this.$api.customerMessage().then(res=>{
+        //alert(111)
+        window.location.href="http://wpa.qq.com/msgrd?v=3&uin=1440413448&site=qq&menu=yes"
+        //this.$api.customerMessage().then(res=>{
 
-        })
+        //})
     }
 
   },
