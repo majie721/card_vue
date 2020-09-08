@@ -25,3 +25,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 回收礼品卡项目
+
+
+体验地址（手机微信体验）   http://yrlove.cn/
+
